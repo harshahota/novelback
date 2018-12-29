@@ -1,0 +1,1 @@
+insert into novels values(0,'cultivation-chat-group','Cultivation Chat Group',1,false);
