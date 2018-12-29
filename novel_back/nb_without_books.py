@@ -9,7 +9,7 @@ for result in myresult:
     novel_latest_update = result[2]
     print_log("The last update of %s in database is %s"%(novellabel,novel_latest_update),False)
     common_url,latest_chapter_number = novel_details(novellabel)
-    latest_chapter_number = 10
+    # latest_chapter_number = 20
     if(common_url != 'None' or latest_chapter_number != 'None'):
         print_log("the latest update of %s is %s"%(novellabel,latest_chapter_number),False)
         if(latest_chapter_number-novel_latest_update > 0):

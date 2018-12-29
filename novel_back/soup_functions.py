@@ -1,4 +1,3 @@
-import os
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
@@ -6,6 +5,7 @@ from selenium.common.exceptions import NoSuchElementException
 
 from db_functions import insert_single_chapter,insert_missed_chapter
 from util_functions import print_log
+from config import drivers_location
 
 import math
 
@@ -14,8 +14,7 @@ headers = {
     }
 tries = 3
 
-dir_path=os.path.dirname(os.path.realpath(__file__))
-chrome_driver_path = dir_path + '/drivers/chromedriver'
+chrome_driver_path = drivers_location + '/chromedriver'
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 
@@ -56,7 +55,6 @@ def post_chapter(id,label,common_url,chapter_no):
                 unedited = text.text.replace('„','“')
                 # unedited = bytes(unedited, 'utf-8').decode('utf-8', 'ignore')
                 finaltext += unedited + "\n"
-            print(finaltext[329])
             driver.close()
             insert_single_chapter(id,label,chapter_no,finaltext)
         except (AttributeError,NoSuchElementException) as e:

@@ -4,7 +4,8 @@ CREATE TABLE novels (
     name VARCHAR(255) NOT NULL,
     sourceid INT NOT NULL,
     with_books BOOLEAN,
+    image varchar(255),
+    description text,
     FOREIGN KEY (sourceid)
         REFERENCES sources (id)
 )
-
