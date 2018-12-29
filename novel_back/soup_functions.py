@@ -17,6 +17,7 @@ tries = 3
 chrome_driver_path = drivers_location + '/chromedriver'
 chrome_options = Options()
 chrome_options.add_argument("--headless")
+chrome_options.add_argument("--no-sandbox")
 
 def no_of_digits(num):
     return int(math.log10(num))+1
@@ -44,9 +45,9 @@ def novel_details(label):
         break
 
 def post_chapter(id,label,common_url,chapter_no):
+    driver = webdriver.Chrome(chrome_driver_path,chrome_options=chrome_options)
     for i in range(tries):
         try:
-            driver = webdriver.Chrome(chrome_driver_path,chrome_options=chrome_options)
             url = common_url+str(chapter_no)
             driver.get(url)
             texts = driver.find_elements_by_class_name('translated')
@@ -55,10 +56,8 @@ def post_chapter(id,label,common_url,chapter_no):
                 unedited = text.text.replace('„','“')
                 # unedited = bytes(unedited, 'utf-8').decode('utf-8', 'ignore')
                 finaltext += unedited + "\n"
-            driver.close()
             insert_single_chapter(id,label,chapter_no,finaltext)
         except (AttributeError,NoSuchElementException) as e:
-            driver.close()
             if i < tries - 1: # i is zero indexed
                 continue
             else:
@@ -66,3 +65,4 @@ def post_chapter(id,label,common_url,chapter_no):
                 print_log("error page not loaded %s"%e,True)
                 pass
         break
+    driver.close()
