@@ -1,0 +1,1 @@
+insert into novel_updates values(1,0,false);
